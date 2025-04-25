@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flashcards - Introduction</title>
+    <title>Flashcards - Effets et Aléatoire</title>
     <style>
         body {
             display: flex;
@@ -44,19 +44,39 @@
             align-items: center;
         }
         .card {
+            perspective: 1000px;
             width: 300px;
             height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            cursor: pointer;
-            transition: transform 0.5s;
-            font-size: 20px;
             margin: 10px;
+            position: absolute;
+        }
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+            cursor: pointer;
+        }
+        .card:hover .card-inner {
+            transform: rotateY(180deg);
+        }
+        .front, .back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .back {
+            transform: rotateY(180deg);
+            background-color: #007BFF;
+            color: white;
         }
     </style>
 </head>
@@ -64,7 +84,6 @@
     <div class="container" id="intro">
         <h1>Bienvenue dans le jeu de Flashcards</h1>
         <p>Ceci est un jeu de mémorisation et d'apprentissage du cours.</p>
-        <p>Écris ta réponse sur une feuille de brouillon avant de retourner la carte.</p>
         <button class="start-btn">Commencer</button>
     </div>
     
@@ -72,49 +91,4 @@
     
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const questions = [
-                { q: "convertis 10<sup>3</sup> km en m", a: "10<sup>6</sup> m" },
-                { q: "convertis 450 km en m", a: "450 000 m" },
-                { q: "convertis 0,450 km en m", a: "450 m" },
-                { q: "convertis 7,23 km en m", a: "7230 m" },
-                { q: "convertis 450 m en km", a: "0,45 km" },
-                { q: "convertis 10<sup>9</sup> m en km", a: "10<sup>6</sup> km" },
-                { q: "convertis 4,50 x 10<sup>5</sup> m en km", a: "4,50 x 10<sup>2</sup> km ou 450 km" },
-                { q: "convertis 4,50 x 10<sup>21</sup> m en km", a: "4,50 x 10<sup>18</sup> km" }
-            ];
-
-            const startButton = document.querySelector('.start-btn');
-            startButton.addEventListener('click', startGame);
-
-            function startGame() {
-                document.getElementById('intro').style.display = 'none';
-                document.getElementById('flashcards').style.display = 'flex';
-                loadFlashcards();
-            }
-
-            function loadFlashcards() {
-                const flashcardsContainer = document.getElementById('flashcards');
-                flashcardsContainer.innerHTML = '';
-                
-                questions.forEach(item => {
-                    let card = document.createElement('div');
-                    card.className = 'card';
-                    card.innerHTML = `<div class='front'>${item.q}</div><div class='back' style='display:none;'>${item.a}</div>`;
-                    card.addEventListener('click', function() {
-                        let front = card.querySelector('.front');
-                        let back = card.querySelector('.back');
-                        if (front.style.display === "none") {
-                            front.style.display = "block";
-                            back.style.display = "none";
-                        } else {
-                            front.style.display = "none";
-                            back.style.display = "block";
-                        }
-                    });
-                    flashcardsContainer.appendChild(card);
-                });
-            }
-        });
-    </script>
-</body>
-</html>
+            const
