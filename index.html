@@ -61,66 +61,70 @@
         <h1>Bienvenue dans le jeu de Flashcards</h1>
         <p>Ceci est un jeu de mémorisation et d'apprentissage du cours.</p>
         <p>Écris ta réponse sur une feuille de brouillon avant de retourner la carte.</p>
-        <button class="start-btn" onclick="startGame()">Commencer</button>
+        <button class="start-btn">Commencer</button>
     </div>
     
     <div class="flashcards" id="flashcards"></div>
     
     <script>
-        const questions = [
-            { q: "convertis 10<sup>3</sup> km en m ", a: "10<sup>6</sup> m "},
-            { q: "convertis 450 km en m ", a: " 450 000 m" },
-			{ q: "convertis 0,450 km en m ", a: " 450 m" },
-			{ q: "convertis 7,23 km en m ", a: " 7230 m" },
-			{ q: "convertis 450 m en km ", a: " 0,45 km" },
-			{ q: "convertis 10<sup>9</sup> m en km ", a: " 10<sup>6</sup> km" },
-			{ q: "convertis 4,50 x 10<sup>5</sup> m en km ", a: " 4,50 x 10<sup>2</sup> km ou 450 km" },
-			{ q: "convertis 4,50 x 10<sup>21</sup> m en km ", a: " 4,50 x 10<sup>18</sup> km" },
+        document.addEventListener('DOMContentLoaded', () => {
+            const questions = [
+                { q: "convertis 10<sup>3</sup> km en m", a: "10<sup>6</sup> m" },
+                { q: "convertis 450 km en m", a: "450 000 m" },
+                { q: "convertis 0,450 km en m", a: "450 m" },
+                { q: "convertis 7,23 km en m", a: "7230 m" },
+                { q: "convertis 450 m en km", a: "0,45 km" },
+                { q: "convertis 10<sup>9</sup> m en km", a: "10<sup>6</sup> km" },
+                { q: "convertis 4,50 x 10<sup>5</sup> m en km", a: "4,50 x 10<sup>2</sup> km ou 450 km" },
+                { q: "convertis 4,50 x 10<sup>21</sup> m en km", a: "4,50 x 10<sup>18</sup> km" }
+            ];
             
-        ];
+            const startButton = document.querySelector('.start-btn');
+            startButton.addEventListener('click', startGame);
 
-        function startGame() {
-            document.getElementById('intro').style.display = 'none';
-            document.getElementById('flashcards').style.display = 'block';
-            loadFlashcards();
-        }
+            function startGame() {
+                document.getElementById('intro').style.display = 'none';
+                document.getElementById('flashcards').style.display = 'block';
+                loadFlashcards();
+            }
 
-        function loadFlashcards() {
-            const flashcardsContainer = document.getElementById('flashcards');
-            flashcardsContainer.innerHTML = '';
-            let usedPositions = [];
-            
-            questions.forEach(item => {
-                let card = document.createElement('div');
-                card.className = 'card';
-                card.innerHTML = `<div class='front'>${item.q}</div><div class='back' style='display:none;'>${item.a}</div>`;
-                card.onclick = function() {
-                    let front = card.querySelector('.front');
-                    let back = card.querySelector('.back');
-                    if (front.style.display === "none") {
-                        front.style.display = "block";
-                        back.style.display = "none";
-                    } else {
-                        front.style.display = "none";
-                        back.style.display = "block";
-                    }
-                };
+            function loadFlashcards() {
+                const flashcardsContainer = document.getElementById('flashcards');
+                flashcardsContainer.innerHTML = '';
+                let usedPositions = [];
                 
-                let position;
-                do {
-                    position = {
-                        x: Math.random() * (window.innerWidth - 320),
-                        y: Math.random() * (window.innerHeight - 220)
-                    };
-                } while (usedPositions.some(pos => Math.abs(pos.x - position.x) < 320 && Math.abs(pos.y - position.y) < 220));
-                
-                usedPositions.push(position);
-                card.style.left = `${position.x}px`;
-                card.style.top = `${position.y}px`;
-                
-                flashcardsContainer.appendChild(card);
-            });
-        }
+                questions.forEach(item => {
+                    let card = document.createElement('div');
+                    card.className = 'card';
+                    card.innerHTML = `<div class='front'>${item.q}</div><div class='back' style='display:none;'>${item.a}</div>`;
+                    card.addEventListener('click', function() {
+                        let front = card.querySelector('.front');
+                        let back = card.querySelector('.back');
+                        if (front.style.display === "none") {
+                            front.style.display = "block";
+                            back.style.display = "none";
+                        } else {
+                            front.style.display = "none";
+                            back.style.display = "block";
+                        }
+                    });
+                    
+                    let position;
+                    do {
+                        position = {
+                            x: Math.random() * (window.innerWidth - 320),
+                            y: Math.random() * (window.innerHeight - 220)
+                        };
+                    } while (usedPositions.some(pos => Math.abs(pos.x - position.x) < 320 && Math.abs(pos.y - position.y) < 220));
+                    
+                    usedPositions.push(position);
+                    card.style.left = `${position.x}px`;
+                    card.style.top = `${position.y}px`;
+                    
+                    flashcardsContainer.appendChild(card);
+                });
+            }
+        });
     </script>
 </body>
 </html>
