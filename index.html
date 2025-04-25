@@ -91,4 +91,51 @@
     
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const
+            const questions = [
+                { q: "convertis 10<sup>3</sup> km en m", a: "10<sup>6</sup> m" },
+                { q: "convertis 450 km en m", a: "450 000 m" },
+                { q: "convertis 0,450 km en m", a: "450 m" },
+                { q: "convertis 7,23 km en m", a: "7230 m" },
+                { q: "convertis 450 m en km", a: "0,45 km" },
+                { q: "convertis 10<sup>9</sup> m en km", a: "10<sup>6</sup> km" },
+                { q: "convertis 4,50 x 10<sup>5</sup> m en km", a: "4,50 x 10<sup>2</sup> km ou 450 km" },
+                { q: "convertis 4,50 x 10<sup>21</sup> m en km", a: "4,50 x 10<sup>18</sup> km" }
+            ];
+
+            const startButton = document.querySelector('.start-btn');
+            const flashcardsContainer = document.getElementById('flashcards');
+
+            startButton.addEventListener('click', startGame);
+
+            function startGame() {
+                document.getElementById('intro').style.display = 'none';
+                flashcardsContainer.style.display = 'flex';
+                loadFlashcards();
+            }
+
+            function loadFlashcards() {
+                flashcardsContainer.innerHTML = '';
+
+                questions.forEach(item => {
+                    let card = document.createElement('div');
+                    card.className = 'card';
+
+                    // Randomize position
+                    card.style.top = `${Math.random() * 70 + 10}%`;
+                    card.style.left = `${Math.random() * 70 + 10}%`;
+
+                    card.innerHTML = `
+                        <div class='card-inner'>
+                            <div class='front'>${item.q}</div>
+                            <div class='back'>${item.a}</div>
+                        </div>
+                    `;
+
+                    // Add to container
+                    flashcardsContainer.appendChild(card);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
