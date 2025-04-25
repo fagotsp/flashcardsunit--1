@@ -38,6 +38,10 @@
             position: relative;
             width: 100vw;
             height: 100vh;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
         }
         .card {
             width: 300px;
@@ -52,7 +56,7 @@
             cursor: pointer;
             transition: transform 0.5s;
             font-size: 20px;
-            position: absolute;
+            margin: 10px;
         }
     </style>
 </head>
@@ -78,20 +82,19 @@
                 { q: "convertis 4,50 x 10<sup>5</sup> m en km", a: "4,50 x 10<sup>2</sup> km ou 450 km" },
                 { q: "convertis 4,50 x 10<sup>21</sup> m en km", a: "4,50 x 10<sup>18</sup> km" }
             ];
-            
+
             const startButton = document.querySelector('.start-btn');
             startButton.addEventListener('click', startGame);
 
             function startGame() {
                 document.getElementById('intro').style.display = 'none';
-                document.getElementById('flashcards').style.display = 'block';
+                document.getElementById('flashcards').style.display = 'flex';
                 loadFlashcards();
             }
 
             function loadFlashcards() {
                 const flashcardsContainer = document.getElementById('flashcards');
                 flashcardsContainer.innerHTML = '';
-                let usedPositions = [];
                 
                 questions.forEach(item => {
                     let card = document.createElement('div');
@@ -108,19 +111,6 @@
                             back.style.display = "block";
                         }
                     });
-                    
-                    let position;
-                    do {
-                        position = {
-                            x: Math.random() * (window.innerWidth - 320),
-                            y: Math.random() * (window.innerHeight - 220)
-                        };
-                    } while (usedPositions.some(pos => Math.abs(pos.x - position.x) < 320 && Math.abs(pos.y - position.y) < 220));
-                    
-                    usedPositions.push(position);
-                    card.style.left = `${position.x}px`;
-                    card.style.top = `${position.y}px`;
-                    
                     flashcardsContainer.appendChild(card);
                 });
             }
